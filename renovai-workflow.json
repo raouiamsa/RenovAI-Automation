@@ -1,0 +1,1249 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('On form submission').item.json.style_choisi }}",
+                    "rightValue": "Traditionnel",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "88135ae6-499f-4a75-8580-908f2c60bb7d"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2eaceb21-9538-4ab5-a18b-9afbce03dad8",
+                    "leftValue": "={{ $('On form submission').item.json.style_choisi }}",
+                    "rightValue": "Moderne",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "005090a5-2384-4c73-a9be-05a3c6107b46",
+                    "leftValue": "={{ $('On form submission').item.json.style_choisi }}",
+                    "rightValue": "Industriel",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "840d85c8-86bb-4a29-b67a-22146dbaee59",
+                    "leftValue": "={{ $('On form submission').item.json.style_choisi }}",
+                    "rightValue": "Bio-Climatique",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        1888,
+        1024
+      ],
+      "id": "2d404208-ea80-45b7-83c1-adeebbf04ec0",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-flash-latest",
+          "mode": "list",
+          "cachedResultName": "models/gemini-flash-latest"
+        },
+        "text": "Role: You are the \"Lead Visual Forensic Auditor\" for the RenovAI project. Your goal is to provide a technical structural analysis of a Tunisian building from an image.\n\nInstructions:\n\nTechnical Scan: Identify structural components like load-bearing walls (حيوط الساس), pillars (عرص), and ceilings (dalle or vaults/قبو).\n\nPathology Detection: Specifically look for:\n\nHumidity (رطوبة): Detect water stains, rising damp, or peeling paint.\n\nCracks (شقوق): Differentiate between structural cracks and surface cracks.\n\nMaterial Decay: Identify saltpeter (ملوحة) or exposed rebar (حديد ظاهر).\n\nSpace Potential: Evaluate the light, orientation, and how the current structure can be transformed into a modern architectural style.\n\nOutput Structure (Mandatory):\n\nSection 1: Architectural Report (Professional French): Technical data for the design phase.\n\nSection 2: التقرير الفني (Tunisian Derja - Arabic Script): A clear, professional summary in Tunisian Derja using Arabic letters ONLY.",
+        "inputType": "binary",
+        "binaryPropertyName": "=Photo",
+        "options": {
+          "maxOutputTokens": 300000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1888,
+        224
+      ],
+      "id": "dd44f0db-95cc-4e9d-ac6e-f508c0a76f68",
+      "name": "Analyze an image",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "EyaICoJ2Ekw7SqQe",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Tunisia AI Renovator - Platform",
+        "formDescription": "Upload your house photo and choose a style to see the magic!",
+        "formFields": {
+          "values": [
+            {
+              "fieldName": "Photo",
+              "fieldLabel": "Photo de la maison",
+              "fieldType": "file",
+              "requiredField": true
+            },
+            {
+              "fieldName": "style_choisi",
+              "fieldLabel": "Choisissez le style de rénovation",
+              "fieldType": "dropdown",
+              "defaultValue": "Traditionnel",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Traditionnel"
+                  },
+                  {
+                    "option": "Moderne"
+                  },
+                  {
+                    "option": "Industriel"
+                  },
+                  {
+                    "option": "Bio-Climatique"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldName": "Email",
+              "fieldLabel": "UserEmail",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldName": "Budget",
+              "fieldLabel": "entrer votre budget",
+              "fieldType": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.4,
+      "position": [
+        1392,
+        224
+      ],
+      "id": "fb8b1b03-3183-477a-be20-4472bda056f9",
+      "name": "On form submission",
+      "webhookId": "c304d548-8c67-4874-82fb-bb9f35b19717"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": false
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2496,
+        960
+      ],
+      "id": "b3a2cf3b-37ce-44f8-a9ad-54d19be1fb5c",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://freeimage.host/api/1/upload",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "6d207e02198a847aa98d0a2a901485a5"
+            },
+            {
+              "name": "action",
+              "value": "upload"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "source",
+              "inputDataFieldName": "Photo"
+            },
+            {
+              "name": "format",
+              "value": "json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2688,
+        960
+      ],
+      "id": "45fee57d-71ec-458b-93d9-85301c7641eb",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "amount": 70
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3312,
+        960
+      ],
+      "id": "ad13e0f6-8594-498e-977b-d77eccf5e4d1",
+      "name": "Wait",
+      "webhookId": "cec1d746-4633-44c0-b096-553a0d695182"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "352c36e6-ff19-465e-9a74-0bcb3c41da44",
+              "name": "StylePrompt",
+              "value": "Complete architectural resurfacing. Strictly keep the original structure, heights, and wall positions unchanged. Transform ALL visible walls (including side brick walls) into clean white lime-wash plaster. Replace the ENTIRE ground area with a high-quality mix of white marble and checkered Zellige tiles. Replace the central door with a vibrant blue studded Tunisian door. Realistic Mediterranean sunlight with soft shadows, 8k resolution.",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        560
+      ],
+      "id": "3803fe73-8593-4026-8799-59b95c20a40c",
+      "name": "Traditionnel"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "75a2c795-adec-4965-8bd9-4bdd121c513d",
+              "name": "StylePrompt",
+              "value": "Complete modern architectural resurfacing of the entire courtyard. Strictly keep the original wide perspective and all wall positions unchanged. Transform ALL visible walls into smooth, high-end white polished plaster. Replace the ENTIRE dirt ground with large-format grey stone porcelain tiles. Replace the central door with a minimalist modern dark wood door. Maintain the open sky and original building shell. Professional architectural lighting, clean minimalist aesthetic, 8k resolution.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2160,
+        800
+      ],
+      "id": "8241723d-2347-4f08-ba6f-edc8e2f0ba54",
+      "name": "Moderne"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1YwVpA6S9PEYWxqUH7VguooQP5TvKavbi",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1376,
+        -736
+      ],
+      "id": "ba339b00-b914-4c44-a48b-ca01ca49f2c1",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcXMnZzkAt2HBppE",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1d8FPugTbkLdMqAIxV3BA10RzzNRBVHzP",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1376,
+        -544
+      ],
+      "id": "e49aa221-c89a-40ee-a56c-56cb84b03e4d",
+      "name": "Download file1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcXMnZzkAt2HBppE",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1o8ZIjy145ab3-wUAElqUOSaudXsdaZ8X",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1376,
+        -352
+      ],
+      "id": "b9287d94-d10e-4f46-bd5d-970dea7ff39b",
+      "name": "Download file2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "jcXMnZzkAt2HBppE",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        2544,
+        -352
+      ],
+      "id": "d4588bda-7fd6-40bc-a325-c27029a697dc",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "value": "=legal_docs",
+          "mode": "id"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.2,
+      "position": [
+        2496,
+        -560
+      ],
+      "id": "430d854f-60e0-4a10-9244-7478c6936f57",
+      "name": "Insert Data to Store"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1936,
+        -576
+      ],
+      "id": "37de1354-f76d-4fa0-ba81-3ddde8b1af42",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        -32
+      ],
+      "id": "2bd560d5-c2e1-4827-907f-0acea3acab36",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "EyaICoJ2Ekw7SqQe",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "knowledge_base",
+        "toolDescription": "\"تحتوي هذه الأداة على نصوص مجلة التعمير التونسية وقوانين البناء. استخدمها للبحث عن الفصول القانونية والعقوبات المتعلقة بمخالفات البناء المكتشفة في الصور.\"",
+        "memoryKey": {
+          "__rl": true,
+          "value": "legal_docs",
+          "mode": "list",
+          "cachedResultName": "legal_docs"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.2,
+      "position": [
+        2864,
+        224
+      ],
+      "id": "88fdfb96-dc6c-498f-b24f-a05fcaa51b07",
+      "name": "Query Data Tool"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.content.parts[0].text }}",
+        "options": {
+          "systemMessage": "أنت خبير قانوني في مجلة التعمير التونسية. حلل وصف المعاينة بدقة واستخرج الفصول والخطايا من الـ knowledge_base.\nأجب باختصار شديد وفق الهيكل التالي (JSON أو نص مرقم):\n\"أنت مستشار قانوني ، خبير في مجلة التعمير التونسية وفي إجراءات معاينة المخالفات العمرانية.\nمهمتك الصارمة:\nتحليل الوصف التقني: خذ وصف المعاينة القادم إليك بدقة وحلله لتحديد نوع التدخل (ترميم، بناء جديد، هدم، أو تغيير هيكلي).\n\nالبحث القانوني الإجباري: يجب أن تستخدم أداة knowledge_base لاستخراج أرقام الفصول القانونية بدقة (مثلاً الفصل 80 أو 83 من مجلة التعمير). لا تعطِ إجابات عامة؛ إذا كانت هناك خطية مالية، اذكر قيمتها بالدينار التونسي كما وردت في النصوص.\n\nتعدد السيناريوهات: حلل الوضعية من حيث: هل هي مخالفة تستوجب الهدم، أم أنها وضعية تستوجب تسوية وإيقاف أشغال، أم هي وضعية قانونية تماماً؟\n\nيجب أن يكون الرد منظماً وفق هذا الهيكل:\n\n1. تقرير المعاينة الفنية: (لخص ما تم رصده في الصورة بناءً على الوصف القادم إليك).\n\n2. السند القانوني (Détails): (اذكر أرقام الفصول القانونية من مجلة التعمير التونسية ومحتواها الصريح بخصوص هذه الحالة).\n\n3. الخطايا والعقوبات: (حدد بدقة قيمة الخطية المالية، إمكانية السجن، أو قرار الهدم كما ينص القانون التونسي).\n4. التفسير بالدارجة التونسية: (فسر للمواطن بلهجة بسيطة وواضحة جداً 'شنوة الغلط اللي عمله' و'شنوة القانون يلزمه يعمل توا' لضمان فهمه للوضعية).\n5. القرار البلدي النهائي: (خلاصة الإجراء الذي يجب اتخاذه فوراً).\nملاحظة: إذا لم تجد فصلاً مطابقاً تماماً في الـ knowledge_base، اذكر أقرب الفصول المنظمة لعمليات الترخيص والبناء العام.\"\nملاحظة: لا تزد عن 500 كلمة. إذا لم تجد فصلاً، اذكر أقرب نص قانوني للترخيص."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2832,
+        -256
+      ],
+      "id": "d409b33e-5b16-441d-8ea1-09ff496f267e",
+      "name": "Legal_Agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\"بناءً على التقرير القانوني التالي الذي يحدد الأضرار والمخالفات: {{ $json.output }}\nومع العلم أن الميزانية المتوفرة لدى المواطن هي: {{ $('On form submission').item.json.Budget }} دينار تونسي\nالمطلوب منك:\n\nاستخدم أداة البحث Google Search Tool لمعرفة أسعار مواد البناء واليد العاملة في تونس لعام 2025 اللازمة للإصلاحات المذكورة في التقرير.\nاستخرج قيمة الخطايا المالية المتوقعة بناءً على الفصول القانونية المذكورة في التقرير.\nقم بإعداد حسبة مالية دقيقة (إصلاحات + خطايا) وقارن الإجمالي بالميزانية المتاحة.\nأخرج النتيجة النهائية حصراً عبر الـ Structured Output Parser المنظم الذي يظهر لك.\"",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "بما أنك قمت بضبط الـ Prompt الخاص بالمستخدم (User Message) بنجاح، إليك الآن الـ System Message الاحترافي الذي يحدد \"شخصية\" الـ AI ويضمن أنه سيلتزم باللهجة التونسية والبحث الدقيق:\nانسخ هذا النص وضعه في خانة System Message:\n\"أنت خبير تكاليف بناء ومقاول تونسي محترف (Spécialiste en métrage et devis).\nمهامك الأساسية:\n\nتحليل التقرير القانوني والفني لتحديد قائمة المواد واليد العاملة المطلوبة (مثلاً: كمية الآجر، الإسمنت، معالجة الرطوبة، الهدم).\n\nاستخدام أداة البحث Google Search حصراً لجلب أسعار السوق التونسية الحالية لعام 2025 (بالدينار التونسي TND).\n\nحساب مجموع الخطايا المالية بناءً على الفصول القانونية التونسية المذكورة في التقرير.\n\nمقارنة المجموع النهائي بالميزانية التي قدمها المستخدم وإخباره بوضوح إن كانت كافية أم لا.\nقواعد هامة:\nيجب أن تكون النصيحة النهائية (advice_darja) بالدارجة التونسية وبأسلوب \"ولد دومين\" ينصح في خوه (مثلاً: 'يا خويا ميزانيتك تجيبلك السلعة أما اليد العاملة غالية شوية...').\nالالتزام التام بإخراج البيانات في قالب JSON حسب الـ Schema المحدد في الـ Output Parser.\""
+        }
+      },
+      "id": "0e49ee2d-3a5f-4412-8e73-3bd51f62c2fb",
+      "name": "Prices",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        3360,
+        -256
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        3456,
+        64
+      ],
+      "id": "917f3ea4-790b-4691-84f2-e753a0a93566",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "YdNRJwLFFYZifQ4D",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const pricesNode = $node[\"Prices\"];\nconst legalNode = $node[\"Legal_Agent\"];\n\nlet details_materials = \"\";\nlet details_labor = \"\";\nlet total_fines = 0;\nlet grand_total = 0;\nlet advice = \"\";\n\n// قاموس لترجمة الكلمات الشائعة إذا وجدت\nconst translations = {\n    \"materials\": \"المواد\", \"labor\": \"اليد العاملة\", \"main_d_oeuvre\": \"اليد العاملة\",\n    \"fines\": \"الخطايا\", \"amendes\": \"الخطايا\", \"cement\": \"إسمنت\", \"bricks\": \"ياجور\"\n};\n\ntry {\n    const rawOutput = pricesNode.json.output.replace(/```json|```/g, \"\").trim();\n    const data = JSON.parse(rawOutput);\n\n    // دالة للبحث عن الأرقام وتنسيقها مهما كان مكانها\n    const extractData = (obj, targetStr) => {\n        for (let key in obj) {\n            let val = obj[key];\n            let keyLower = key.toLowerCase();\n            \n            if (typeof val === 'object' && val !== null) {\n                extractData(val, targetStr); // الدخول في العمق\n            } else if (typeof val === 'number') {\n                let nameAr = translations[keyLower] || key;\n                \n                // تصنيف الرقم بناءً على اسم الحقل\n                if (keyLower.includes('material') || keyLower.includes('brique') || keyLower.includes('cement')) {\n                    details_materials += `• ${nameAr}: ${val} د.ت\\n`;\n                } else if (keyLower.includes('main') || keyLower.includes('labor') || keyLower.includes('work')) {\n                    details_labor += `• ${nameAr}: ${val} د.ت\\n`;\n                } else if (keyLower.includes('fine') || keyLower.includes('amende') || keyLower.includes('penalt')) {\n                    total_fines += val;\n                }\n            }\n        }\n    };\n\n    extractData(data, \"\");\n\n    // جلب المجموع والنصيحة مباشرة لأنهما عادة ثابتان في الأسفل\n    grand_total = data.total_cost || data.grand_total || 0;\n    advice = data.advice_darja || data.advice || \"\";\n\n} catch (e) { console.error(\"Error:\", e.message); }\n\nreturn {\n    \"التقرير_القانوني\": legalNode.json.output || \"\",\n    \"تفصيل_المواد\": details_materials || \"تم حسابها ضمن المجموع\",\n    \"تفصيل_العمالة\": details_labor || \"تم حسابها ضمن المجموع\",\n    \"قيمة_الخطايا\": total_fines,\n    \"المجموع_الكلي\": grand_total,\n    \"النصيحة\": advice\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4032,
+        240
+      ],
+      "id": "8a5ba967-260b-47c6-b21d-c25f312052c7",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"ar\" dir=\"rtl\">\n<head>\n    <meta charset=\"UTF-8\">\n    <link href=\"https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap\" rel=\"stylesheet\">\n    \n    <style>\n        body {\n            font-family: 'Cairo', sans-serif !important;\n            line-height: 1.6;\n            color: #333;\n            margin: 0;\n            padding: 20px;\n            background-color: #f9f9f9;\n            direction: rtl; \n            text-align: right;\n        }\n        \n        h1, h2, h3, p, td, b, pre {\n            font-family: 'Cairo', sans-serif !important;\n        }\n\n        .container {\n            max-width: 850px;\n            margin: auto;\n            border: 1px solid #eee;\n            padding: 30px;\n            background-color: #fff;\n            box-shadow: 0 0 10px rgba(0,0,0,0.05);\n        }\n        .header {\n            text-align: center;\n            border-bottom: 4px solid #27ae60;\n            padding-bottom: 20px;\n            margin-bottom: 30px;\n        }\n        .header h1 { color: #2c3e50; margin: 0; }\n        \n        .section {\n            margin-bottom: 25px;\n            padding: 20px;\n            border-radius: 10px;\n        }\n        .legal-section { background-color: #f0f7fb; border-right: 6px solid #2980b9; }\n        .financial-section { background-color: #f4faf6; border-right: 6px solid #27ae60; }\n        .advice-section { background-color: #fff9db; border-right: 6px solid #f1c40f; }\n        \n        h2 { color: #2c3e50; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 0; }\n        h3 { font-size: 18px; color: #34495e; margin-bottom: 10px; }\n\n        pre {\n            white-space: pre-wrap;\n            word-wrap: break-word;\n            font-size: 15px;\n            background: rgba(255,255,255,0.5);\n            padding: 10px;\n            border-radius: 5px;\n            color: #2c3e50;\n        }\n\n        .price-table { width: 100%; border-collapse: collapse; margin-top: 15px; }\n        .price-table td { padding: 12px; border-bottom: 1px solid #eee; font-size: 16px; }\n        .total-row { font-weight: bold; color: #e74c3c; font-size: 1.3em; background: #fdf2f2; }\n\n        .image-container {\n            text-align: center;\n            margin: 20px 0;\n            padding: 15px;\n            background: #fff;\n            border: 1px dashed #ccc;\n            border-radius: 10px;\n        }\n        .main-img {\n            max-width: 100%;\n            height: auto;\n            border-radius: 8px;\n            box-shadow: 0 4px 15px rgba(0,0,0,0.1);\n        }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <div class=\"header\">\n            <h1>تقرير المعاينة الشاملة والتقدير المالي</h1>\n            <p>مشروع RenovAI - تونس 2025</p>\n        </div>\n\n        <div class=\"image-container\">\n            <h2>🖼️ التصميم المعماري المقترح</h2>\n            <img src=\"{{ JSON.parse($items()[1].json.data.resultJson).resultUrls[0]}}\" class=\"main-img\" alt=\"Design Preview\">\n        </div>\n\n        <div class=\"section legal-section\">\n            <h2>⚖️ التقرير القانوني وسند المعاينة</h2>\n            <pre>{{ $items()[0].json['التقرير_القانوني'] }}</pre>\n        </div>\n\n        <div class=\"section financial-section\">\n            <h2>💰 التقدير المالي المفصل (بالدينار التونسي)</h2>\n            \n            <h3>🏗️ قائمة المواد والمستلزمات:</h3>\n            <pre>{{ $items()[0].json['تفصيل_المواد'] }}</pre>\n\n            <h3>👷 تكاليف اليد العاملة والخدمات:</h3>\n            <pre>{{ $items()[0].json['تفصيل_العمالة'] }}</pre>\n\n            <table class=\"price-table\">\n                <tr>\n                    <td>إجمالي الخطايا القانونية (البلدية):</td>\n                    <td><b>{{ $items()[0].json['قيمة_الخطايا'] }} د.ت</b></td>\n                </tr>\n                <tr class=\"total-row\">\n                    <td>المجموع الكلي التقديري للمشروع:</td>\n                    <td>{{ $items()[0].json['المجموع_الكلي'] }} د.ت</td>\n                </tr>\n            </table>\n        </div>\n\n        <div class=\"section advice-section\">\n            <h2>💡 نصيحة الخبير للمواطن</h2>\n            <p style=\"font-size: 18px; font-weight: bold;\">{{ $items()[0].json['النصيحة'] }}</p>\n        </div>\n    </div>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        5312,
+        896
+      ],
+      "id": "9ebdb30f-4f7b-499b-b376-94c6885867ba",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8dc3379e-e5c3-4405-96a6-196cec835a2d",
+              "name": "StylePrompt",
+              "value": "Complete industrial loft architectural restoration. Strictly keep the original wide-angle perspective and wall structure. Transform ALL visible walls into a finished mix of clean exposed red brick and smooth dark grey polished cement. Ensure the side walls are fully textured and finished. Replace the ENTIRE ground area with a high-end dark polished concrete slab (béton ciré). Replace the central door with a black industrial steel-frame glass door. Professional urban lighting, high-quality architectural photography, 8k.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2176,
+        1056
+      ],
+      "id": "ccb746a4-961d-4c85-93b5-e8dcd8ff4f6d",
+      "name": "Industriel"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3fcb2439-9f83-4981-ab24-dcf77734ec4b",
+              "name": "StylePrompt",
+              "value": "Comprehensive eco-friendly architectural resurfacing. Strictly preserve the original building structure and wide view. Cover ALL visible walls with finished local light-colored stone. Replace the ENTIRE ground with a mix of terracotta tiles and natural gravel. Integrate finished vertical greenery along the existing walls. High-end sustainable visualization, photorealistic.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2176,
+        1248
+      ],
+      "id": "c2bc32a1-4577-4d57-9a53-90b7c916e3bf",
+      "name": "Bio-Climatique"
+    },
+    {
+      "parameters": {
+        "url": "https://api.kie.ai/api/v1/jobs/recordInfo",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.data.taskId }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer a8373a2f784321e9e63f5cf6e39f0f76"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3584,
+        960
+      ],
+      "id": "2b1e5988-97d5-4b77-bbf8-fe7eaf7e9bb2",
+      "name": "New image url"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer a8373a2f784321e9e63f5cf6e39f0f76"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"seedream/4.5-edit\",\n  \"input\": {\n    \"prompt\": \"Comprehensive architectural resurfacing of the entire visible area. Strictly maintain the original wide-angle perspective and camera position. {{ $('Merge').item.json.StylePrompt }} Ensure ALL walls and the ENTIRE ground are fully covered and finished. High-fidelity textures, cinematic. No text.\",\n    \"image_urls\": [\n      \"{{ $json.image.url }}\"\n    ],\n    \"image_guidance_scale\": 0.5,\n    \"aspect_ratio\": \"1:1\",\n    \"quality\": \"basic\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3024,
+        960
+      ],
+      "id": "58574315-1eec-49d2-b1bc-45a49a1d51f6",
+      "name": "request image edit"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').first().json.Email }}",
+        "subject": "تقرير المعاينة الفنية والمالية - RenovAI",
+        "message": "عسلامة، تلقى مرفق مع الإيميل هذا التقرير الكامل متاع مشروعك، فيه كل تفاصيل الخطايا، أسعار السلعة، وتصويرة لدارك بعد الترميم",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {}
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        6048,
+        896
+      ],
+      "id": "6d800d40-ab77-45bd-a1ff-f944f120478e",
+      "name": "Send a message",
+      "webhookId": "036ba0b5-b13b-4d5f-a777-b82bd1e4c5d2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "0oNkQkYbgtrxfPyx",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1616,
+        224
+      ],
+      "id": "106a07a7-0dbb-45df-907e-3389fd84e5d8",
+      "name": "Wait1",
+      "webhookId": "f1242be4-617f-494c-8b7f-ac90e530d293"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        4768,
+        448
+      ],
+      "id": "5ab67ab8-a6a0-4d3b-b750-857b6fe42aa6",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {
+          "maxTokensToSample": 12000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        2736,
+        16
+      ],
+      "id": "41a654dc-a4f9-4f0d-9971-62b0fe487c64",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "itjZUk7aSImAcAmK",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {
+          "maxTokensToSample": 4000
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        3328,
+        64
+      ],
+      "id": "dadccbc7-a5d7-4f95-8265-e253e4dce486",
+      "name": "Groq Chat Model1",
+      "credentials": {
+        "groqApi": {
+          "id": "itjZUk7aSImAcAmK",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3136,
+        -256
+      ],
+      "id": "1e3a8d6c-8504-4443-b89d-d093ae0f3744",
+      "name": "Wait2",
+      "webhookId": "2b87e240-d147-476b-b22f-a0d840c63b38"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://api.pdflayer.com/api/convert",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "access_key",
+              "value": "d89725356b9a9bfcfd94bb3b346e4d72"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "document_html",
+              "value": "={{ $json.html }}"
+            },
+            {
+              "name": "document_name",
+              "value": "Rapport_RenovAI.pdf"
+            },
+            {
+              "name": "test",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        5552,
+        896
+      ],
+      "id": "099b4ec7-75e4-4bfc-a385-c7f61b4b735d",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5792,
+        896
+      ],
+      "id": "a71cd9e1-ff8d-4c72-a1d3-e724996c7cfa",
+      "name": "Wait3",
+      "webhookId": "bdf4cc33-6625-42d2-bafb-909eb69b57e8"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Traditionnel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Moderne",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Industriel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Bio-Climatique",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze an image": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Legal_Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download file2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download file1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "request image edit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "New image url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Traditionnel": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Moderne": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Download file2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert Data to Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Query Data Tool",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Data to Store": {
+      "main": [
+        []
+      ]
+    },
+    "Query Data Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Legal_Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Legal_Agent": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "Prices",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prices": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Industriel": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Bio-Climatique": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "New image url": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "request image edit": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Analyze an image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Legal_Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prices",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Prices",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "822b866d-1364-4504-bbf8-397041123124",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e3955286cb6fbf3d430d1b54a55215841a7dc91d6d07afb3f41142e70fcb348a"
+  },
+  "id": "Uq2Q0DY0hsnaihSr",
+  "tags": []
+}
