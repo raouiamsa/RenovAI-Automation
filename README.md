@@ -2,7 +2,7 @@
 This project is an automated workflow built with **n8n** that helps Tunisian citizens assess the legal and financial implications of building renovations. By simply filling out a form and uploading a photo, the system generates a detailed PDF report.
 
 ## 🚀 Live Demo
-You can try the live system here: [https://raouia-msaddek.app.n8n.cloud/form-test/c304d548-8c67-4874-82fb-bb9f35b19717]
+You can try the live system here: [https://raouia-msaddek.app.n8n.cloud/form/c304d548-8c67-4874-82fb-bb9f35b19717]
 
 ## 🛠️ Features
 - **AI-Driven Analysis**: Uses OpenAI to analyze legal risks based on Tunisian urban planning laws.
